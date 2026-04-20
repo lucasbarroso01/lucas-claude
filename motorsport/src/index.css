@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --red:    #E8002D;
+  --blue:   #0033A0;
+  --dark:   #050810;
+  --mid:    #0A1628;
+  --light:  #1A2A4A;
+  --white:  #FFFFFF;
+  --gray:   #8A9AB0;
+  --chrome: #C8D8E8;
+  --gold:   #B8860B;
+  --green:  #00A651;
+  --yellow: #FFD700;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Scanline CRT overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #ff1a4a; }
+
+/* Vibration keyframe for CTA button */
+@keyframes vibrate {
+  0%,100% { transform: translateX(0) rotate(0deg); }
+  20%     { transform: translateX(-2px) rotate(-0.3deg); }
+  40%     { transform: translateX(2px) rotate(0.3deg); }
+  60%     { transform: translateX(-2px) rotate(-0.3deg); }
+  80%     { transform: translateX(2px) rotate(0.3deg); }
+}
+
+.btn-vibrate:hover {
+  animation: vibrate 0.25s linear infinite;
+  box-shadow: 0 0 30px var(--red), 0 0 60px rgba(232,0,45,0.4);
+}
+
+/* Letter reveal */
+@keyframes letterReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.letter-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: letterReveal 0.4s ease forwards;
+}
+
+/* Line grow */
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.line-grow {
+  transform-origin: center;
+  animation: lineGrow 0.6s ease forwards;
+}
+
+/* Fade up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.7s ease forwards; }
+
+/* Scroll reveal */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Steering wheel spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.spin-slow { animation: spin 4s linear infinite; }
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0; }
+}
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 10px currentColor; }
+  50%     { box-shadow: 0 0 30px currentColor, 0 0 60px currentColor; }
+}
+
+canvas { will-change: transform; display: block; }
