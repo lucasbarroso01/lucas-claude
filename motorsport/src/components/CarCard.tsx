@@ -9,6 +9,7 @@ interface CarCardProps {
   accentColor: string
   fragSrc: string
   active: boolean
+  imageSrc?: string
 }
 
 export default function CarCard({
@@ -19,6 +20,7 @@ export default function CarCard({
   accentColor,
   fragSrc,
   active,
+  imageSrc,
 }: CarCardProps) {
   const [hovered, setHovered] = useState(false)
   const [speed, setSpeed] = useState(0)
@@ -29,7 +31,6 @@ export default function CarCard({
 
   const { canvasRef, setHover, setMouse } = useWebGL(fragSrc, active)
 
-  // Animate speed meter
   useEffect(() => {
     const tick = () => {
       const diff = targetSpeedRef.current - speedRef.current
@@ -67,36 +68,95 @@ export default function CarCard({
     <div
       ref={cardRef}
       className="relative flex flex-col cursor-pointer group"
-      style={{ border: `1px solid ${hovered ? accentColor : 'rgba(255,255,255,0.08)'}`,
-               transition: 'border-color 0.3s ease',
-               boxShadow: hovered ? `0 0 30px ${accentColor}33, 0 0 60px ${accentColor}11` : 'none' }}
+      style={{
+        border: `1px solid ${hovered ? accentColor : 'rgba(255,255,255,0.08)'}`,
+        transition: 'border-color 0.3s ease',
+        boxShadow: hovered ? `0 0 30px ${accentColor}33, 0 0 60px ${accentColor}11` : 'none',
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Canvas */}
+      {/* Visual area: photo on top, shader as overlay */}
       <div className="relative" style={{ height: '400px', overflow: 'hidden' }}>
+
+        {/* Real photo background */}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={title}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              transition: 'transform 0.6s ease, filter 0.6s ease',
+              transform: hovered ? 'scale(1.06)' : 'scale(1.0)',
+              filter: hovered
+                ? 'brightness(0.9) saturate(1.3)'
+                : 'brightness(0.65) saturate(0.9)',
+            }}
+          />
+        )}
+
+        {/* WebGL shader overlay — blended on top of photo */}
         <canvas
           ref={canvasRef}
-          style={{ width: '100%', height: '100%' }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            mixBlendMode: imageSrc ? 'screen' : 'normal',
+            opacity: imageSrc ? (hovered ? 0.55 : 0.35) : 1,
+            transition: 'opacity 0.6s ease',
+          }}
         />
+
+        {/* Dark gradient at bottom for readability */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '50%',
+            background: 'linear-gradient(to top, rgba(5,8,16,0.85) 0%, transparent 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+
         {/* Speed overlay (top-right) */}
-        <div className="absolute top-3 right-3 flex flex-col items-end">
-          <span
-            className="font-orbitron text-xs tracking-widest"
-            style={{ color: accentColor, opacity: 0.7 }}
-          >
+        <div className="absolute top-3 right-3 flex flex-col items-end" style={{ zIndex: 2 }}>
+          <span className="font-orbitron text-xs tracking-widest" style={{ color: accentColor, opacity: 0.8 }}>
             SPEED
           </span>
           <span
             className="font-orbitron text-2xl font-bold leading-none"
-            style={{ color: accentColor,
-                     textShadow: `0 0 20px ${accentColor}` }}
+            style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}` }}
           >
             {speed}
           </span>
           <span className="font-orbitron text-xs" style={{ color: 'var(--gray)' }}>
             km/h
+          </span>
+        </div>
+
+        {/* Category label bottom-left */}
+        <div className="absolute bottom-4 left-4" style={{ zIndex: 2 }}>
+          <span
+            className="font-orbitron font-bold text-4xl"
+            style={{
+              color: accentColor,
+              opacity: 0.15,
+              letterSpacing: '-0.02em',
+              lineHeight: 1,
+              transition: 'opacity 0.3s ease',
+            }}
+          >
+            {numStr}
           </span>
         </div>
       </div>
@@ -114,7 +174,7 @@ export default function CarCard({
       </div>
 
       {/* Card info */}
-      <div className="p-6 bg-racing-mid" style={{ background: 'var(--mid)' }}>
+      <div className="p-6" style={{ background: 'var(--mid)' }}>
         <div className="flex items-baseline gap-4 mb-3">
           <span
             className="font-orbitron font-bold text-3xl transition-transform duration-300"
@@ -127,10 +187,7 @@ export default function CarCard({
           >
             {numStr}
           </span>
-          <span
-            className="font-orbitron font-bold text-lg tracking-widest uppercase"
-            style={{ color: 'var(--white)' }}
-          >
+          <span className="font-orbitron font-bold text-lg tracking-widest uppercase" style={{ color: 'var(--white)' }}>
             {title}
           </span>
         </div>
@@ -139,7 +196,6 @@ export default function CarCard({
           {subtitle}
         </p>
 
-        {/* Animated underline */}
         <div className="h-px mb-4 overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
           <div
             className="h-full transition-all duration-500"

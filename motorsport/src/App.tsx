@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import HeroCanvas from './components/HeroCanvas'
 import CarCard from './components/CarCard'
-import PortraitCanvas from './components/PortraitCanvas'
+import PortraitPhoto from './components/PortraitPhoto'
 import TelemetryDisplay from './components/TelemetryDisplay'
 import EeproCTA from './components/EeproCTA'
 
@@ -18,6 +18,7 @@ const CATEGORIES = [
     description: 'Setup, telemetria e estratégia em pista com a Ferrari 488 Challenge',
     accentColor: '#E8002D',
     fragSrc: ferrariGlsl,
+    imageSrc: '/ferrari.jpg',
   },
   {
     title: 'GP3 / FÓRMULA',
@@ -25,6 +26,7 @@ const CATEGORIES = [
     description: 'Desenvolvimento aerodinâmico e setup de carros de fórmula aberta',
     accentColor: '#0066FF',
     fragSrc: gp3Glsl,
+    imageSrc: '/gp3.jpg',
   },
   {
     title: 'STOCK CAR BRASIL',
@@ -32,6 +34,7 @@ const CATEGORIES = [
     description: 'Engenharia de corrida na categoria mais competitiva do motorsport nacional',
     accentColor: '#00A651',
     fragSrc: stockcarGlsl,
+    imageSrc: '/stockcar.jpg',
   },
   {
     title: 'PORSCHE CUP',
@@ -39,6 +42,7 @@ const CATEGORIES = [
     description: 'Otimização de performance e análise de dados na Porsche GT3 Cup',
     accentColor: '#D4A017',
     fragSrc: porscheGlsl,
+    imageSrc: '/porsche.jpg',
   },
 ]
 
@@ -262,6 +266,7 @@ function CategoryCard({ cat, index }: { cat: typeof CATEGORIES[0]; index: number
           accentColor={cat.accentColor}
           fragSrc={cat.fragSrc}
           active={active}
+          imageSrc={cat.imageSrc}
         />
       ) : (
         <div style={{ height: 540, background: 'var(--mid)', border: '1px solid rgba(255,255,255,0.05)' }} />
@@ -337,7 +342,7 @@ export default function App() {
               }}
             >
               <div style={{ aspectRatio: '4/5', maxWidth: '420px', margin: '0 auto', overflow: 'hidden', border: '1px solid var(--light)' }}>
-                <PortraitCanvas />
+                <PortraitPhoto />
               </div>
             </div>
 
