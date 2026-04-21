@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd motorsport && npm install && npm run build",
+  "outputDirectory": "motorsport/dist",
+  "installCommand": "echo skip",
+  "framework": null
+}
