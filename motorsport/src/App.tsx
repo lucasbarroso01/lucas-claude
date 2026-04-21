@@ -18,7 +18,7 @@ const CATEGORIES = [
     description: 'Setup, telemetria e estratégia em pista com a Ferrari 488 Challenge',
     accentColor: '#E8002D',
     fragSrc: ferrariGlsl,
-    imageSrc: '/ferrari.jpg',
+    imageSrc: '/ferrari.jpeg',
   },
   {
     title: 'GP3 / FÓRMULA',
@@ -26,7 +26,7 @@ const CATEGORIES = [
     description: 'Desenvolvimento aerodinâmico e setup de carros de fórmula aberta',
     accentColor: '#0066FF',
     fragSrc: gp3Glsl,
-    imageSrc: '/gp3.jpg',
+    imageSrc: '/gp3 formula.jpeg',
   },
   {
     title: 'STOCK CAR BRASIL',
@@ -34,7 +34,7 @@ const CATEGORIES = [
     description: 'Engenharia de corrida na categoria mais competitiva do motorsport nacional',
     accentColor: '#00A651',
     fragSrc: stockcarGlsl,
-    imageSrc: '/stockcar.jpg',
+    imageSrc: '/stock car .jpeg',
   },
   {
     title: 'PORSCHE CUP',
@@ -42,7 +42,7 @@ const CATEGORIES = [
     description: 'Otimização de performance e análise de dados na Porsche GT3 Cup',
     accentColor: '#D4A017',
     fragSrc: porscheGlsl,
-    imageSrc: '/porsche.jpg',
+    imageSrc: '/porsche cup .png',
   },
 ]
 

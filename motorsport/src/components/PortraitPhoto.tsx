@@ -12,7 +12,7 @@ export default function PortraitPhoto() {
     >
       {/* Photo */}
       <img
-        src="/pedro.jpg"
+        src="/Pedro Henrique .jpeg"
         alt="Pedro Henrique do Carmo"
         style={{
           width: '100%',
