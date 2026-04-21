@@ -5,6 +5,10 @@ import CarCard from './components/CarCard'
 import PortraitPhoto from './components/PortraitPhoto'
 import TelemetryDisplay from './components/TelemetryDisplay'
 import EeproCTA from './components/EeproCTA'
+import NavBar from './components/NavBar'
+import ProjectsSection from './components/ProjectsSection'
+import ResultsSection from './components/ResultsSection'
+import ContactSection from './components/ContactSection'
 
 import ferrariGlsl from './components/shaders/ferrari.glsl?raw'
 import gp3Glsl from './components/shaders/gp3.glsl?raw'
@@ -294,9 +298,11 @@ export default function App() {
   return (
     <>
       <LoadFlash />
+      <NavBar />
 
       {/* ========== HERO ========== */}
       <section
+        id="hero"
         className="relative flex items-center justify-center overflow-hidden"
         style={{ height: '100vh', minHeight: '600px', background: 'var(--dark)' }}
       >
@@ -305,7 +311,7 @@ export default function App() {
       </section>
 
       {/* ========== CATEGORIES ========== */}
-      <section className="py-24 px-4" style={{ background: 'var(--dark)' }}>
+      <section id="categorias" className="py-24 px-4" style={{ background: 'var(--dark)' }}>
         <div className="max-w-6xl mx-auto">
           <div className="mb-16">
             <p className="font-orbitron text-xs uppercase mb-3" style={{ color: 'var(--red)', letterSpacing: '0.4em' }}>
@@ -325,8 +331,15 @@ export default function App() {
         </div>
       </section>
 
+      {/* ========== PROJETOS ========== */}
+      <ProjectsSection />
+
+      {/* ========== RESULTADOS ========== */}
+      <ResultsSection />
+
       {/* ========== SOBRE ========== */}
       <section
+        id="sobre"
         ref={aboutSection.ref as React.RefObject<HTMLElement>}
         className="py-24 px-4"
         style={{ background: 'var(--mid)' }}
@@ -498,6 +511,9 @@ export default function App() {
 
       {/* ========== EEPRO CTA ========== */}
       <EeproCTA />
+
+      {/* ========== CONTATO ========== */}
+      <ContactSection />
 
       {/* ========== FOOTER ========== */}
       <footer className="py-16 px-8" style={{ background: 'var(--dark)', borderTop: '1px solid var(--light)' }}>
