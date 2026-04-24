@@ -166,3 +166,41 @@ INSERT INTO attendants (name, whatsapp, email) VALUES
   ('Maria Santos', '11999990002', 'maria@loja.com'),
   ('Julia Lima', '11999990003', 'julia@loja.com'),
   ('Fernanda Costa', '11999990004', 'fernanda@loja.com');
+
+-- =============================================
+-- TABELA: crm_leads (Emerald CRM)
+-- =============================================
+
+CREATE TABLE IF NOT EXISTS crm_leads (
+  id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name            TEXT NOT NULL,
+  phone           TEXT NOT NULL,
+  email           TEXT,
+  status          TEXT CHECK (status IN ('buyer','no_show_call','no_response','call_no_close')) NOT NULL,
+  emoji           TEXT,
+  total_value     DECIMAL(10,2),
+  paid_amount     DECIMAL(10,2) DEFAULT 0,
+  payment_status  TEXT CHECK (payment_status IN ('paid','partial','unpaid')),
+  project_type    TEXT,
+  notes           TEXT,
+  created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  last_contact    TIMESTAMP WITH TIME ZONE
+);
+
+CREATE INDEX IF NOT EXISTS idx_crm_leads_status         ON crm_leads(status);
+CREATE INDEX IF NOT EXISTS idx_crm_leads_payment_status ON crm_leads(payment_status);
+
+-- Dados iniciais
+INSERT INTO crm_leads (name, phone, status, total_value, paid_amount, payment_status, emoji)
+VALUES
+  ('Marcelo Pissurno', '62991767644', 'buyer', 1000, 500,  'partial', '💎'),
+  ('Dayana Youssef',   '62991767644', 'buyer', 1000, 1000, 'paid',    '💎'),
+  ('Casa Vereda',      '62991767644', 'buyer', 1000, 1000, 'paid',    '💎'),
+  ('Kesley Moraes',    '62991767644', 'buyer', 1000, 1000, 'paid',    '💎'),
+  ('Claudiney Rocha',  '62991767644', 'buyer', 1500, 0,    'unpaid',  '💎'),
+  ('Cleyton C3',       '62991767644', 'buyer', 1500, 0,    'unpaid',  '💎')
+ON CONFLICT DO NOTHING;
+
+ALTER TABLE crm_leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY IF NOT EXISTS "Public access on crm_leads" ON crm_leads FOR ALL USING (true);
