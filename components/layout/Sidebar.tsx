@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Heart,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -29,6 +30,7 @@ const navItems = [
   { href: "/attendants", label: "Atendentes", icon: GitBranch },
   { href: "/campaigns", label: "Campanhas", icon: Megaphone },
   { href: "/simulation", label: "Simulação", icon: Play },
+  { href: "/higgsfield", label: "Higgsfield AI", icon: Zap },
 ];
 
 export function Sidebar() {
